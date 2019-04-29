@@ -274,6 +274,29 @@ function initBoard(rows, columns) {
 }
 
 function printBoard(prop = "display") {
+  board.forEach(line => {
+    line.forEach(box => {
+      if (box.hasOwnProperty("entities") && box.entities.length > 0) {
+        switch (box.entities[0].type) {
+          case "monster":
+            box.display = "M";
+            break;
+          case "tradesman":
+            box.display = "T";
+            break;
+          case "dungeon":
+            box.display = "D";
+            break;
+          case "item":
+            box.display = "I";
+            break;
+        }
+      }
+    });
+  });
+  if (player.position !== undefined) {
+    board[player.position.y][player.position.x].display = "P";
+  }
   for (let k = 0; k < board.length; k++) {
     let line = [];
     for (let l = 0; l < board[k].length; l++) {
